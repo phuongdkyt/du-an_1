@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+       android:background="#08243a"
+    >
+    <include android:id="@+id/toolbar1"
+        layout="@layout/toolbar_layout" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+        <ToggleButton
+            android:id="@+id/battat"
+            android:layout_marginStart="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/check_toggle"
+            android:textOff=""
+            android:textOn="" />
+
+        <TextView
+            android:id="@+id/hienthi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="Đã tắt cảm biến"
+            android:layout_gravity="left"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="32dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="94dp"
+            android:layout_height="wrap_content"
+            android:text="Vị trí hiện tại:"
+            android:textColor="#fffc03" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/vitri"/>
+        <TextView
+            android:id="@+id/vitri"
+            android:layout_width="148dp"
+            android:layout_height="match_parent"
+            android:text="chưa xác định"
+            android:textColor="#E9110B" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/time1"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/ketnoimang"
+        android:textColor="#fffc03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/hienthisdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No NumberPhone"
+            android:textColor="#fffc03" />
+
+
+
+</LinearLayout>
+
