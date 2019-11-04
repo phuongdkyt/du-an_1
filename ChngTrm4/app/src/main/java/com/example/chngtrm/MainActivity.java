@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String mLastUpdateDay;
     private String dulieusdt,dulieusdtnow;
      private static int d=0;
-    private Boolean checksensor=false;
+    private Boolean checksensor=false,checkMP3=false;
     private final  String API_KEY="AIzaSyA9Z90IURAnMIvJEBEHF70bhh7oCAFv11Y";
 
     @Override
@@ -69,8 +70,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.activity_main);
         RequestPermission();
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
+        //đăng kí gps
         buildLocationRequest();
+        //hiện thị gps ra màn hình
         buildLocationCallback();
+        //cập nhật dữ liệu gps
         fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
         t1 = findViewById(R.id.hienthi);
         t2 = findViewById(R.id.vitri);
@@ -81,8 +85,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         toggleButton=findViewById(R.id.battat);
         toggleButton.setOnCheckedChangeListener(this);
         toolbar=findViewById(R.id.toolbar1);
+        toolbar.setTitleTextColor(Color.LTGRAY);
         setSupportActionBar(toolbar);
-
+       //nhận dữ liệu từ bộ nhớ trong
         readFromInternal();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if (sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) != null) {
@@ -91,33 +96,26 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else {
             Toast.makeText(this, "Cảm biến không tồn tại!", Toast.LENGTH_SHORT).show();
         }
+        //lấy dữ liệu ngày giờ từ hệ thống
         mLastUpdateDay = DateFormat.getDateTimeInstance().format(new Date());
         t3.setText(mLastUpdateDay);
         if(isOnline()) t4.setText("Trạng thái mạng: ON");
         else  t4.setText("Trạng thái mạng: OFF");
         if(dulieusdtnow==null) t5.setText("Bạn chưa nhập SĐT,vui lòng nhập SĐT");
-        else t5.setText("SĐT:"+dulieusdtnow);
+        else t5.setText("SĐT: "+dulieusdtnow);
 }
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
     public  void buildLocationCallback()
     {
-
        locationCallback = new LocationCallback() {
-
     @Override
     public  void onLocationResult(LocationResult locationResult) {
         for(Location location:locationResult.getLocations())
         {
-            t2.setText("("+location.getLatitude()+"."+location.getLongitude()+")");
+            t2.setText("("+location.getLatitude()+","+location.getLongitude()+")");
         }
       }
 };
     }
-
    @SuppressLint("RestrictedApi")
    public void buildLocationRequest()
    {
@@ -127,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
        locationRequest.setFastestInterval(3000);
        locationRequest.setSmallestDisplacement(10);
     }
+    //xét các thời điểm thay đổi của sensor
     @Override
     public void onSensorChanged(SensorEvent event) {
         Float giatri = event.values[0];
@@ -135,7 +134,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 d++;
                 t1.setText("Bị phát hiện");
                 if (d <= 10) {
-                    if (d == 1) Canhbaomp3();
+                    if (d == 1) {
+                        Canhbaomp3();
+                        checkMP3 = true;
+                    }
                     fusedLocationProviderClient.getLastLocation()
                             .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                                 @Override
@@ -143,10 +145,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                     // Got last known location. In some rare situations this can be null.
                                     if (location != null) {
                                         Guisms(
-                                                "https://www.google.com/maps/place/" + location.getLatitude() + "," + location.getLongitude() + "/" + "  SOS!");
+                                                "https://www.google.com/maps/place/" + location.getLatitude() + "," + location.getLongitude() + "/" + " Cảnh báo mất máy!");
                                     } else Guisms2();
                                 }
-
                             });
                 }
             } else {
@@ -155,11 +156,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
        }
     }
+    //phát nhạc mp3
     private void Canhbaomp3() {
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.canhbaomp3);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }
+    //gửi sms khi có vị trí GPS
     private void Guisms(String dulieu) {
         try {
             String dl=String.valueOf(dulieu);
@@ -167,10 +170,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             smsManager.sendTextMessage(dulieusdtnow, null,dl, null, null);
             Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), dulieusdtnow+"Không gửi được tin nhắn"+dulieu, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Không gửi được tin nhắn", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
+    //gửi sms khi không có vị trí GPS
     private void Guisms2() {
         try {
 
@@ -184,13 +188,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
-
+     //kiểm tra đăng kí quyền
     private boolean checkPermission(String permission) {
         int checkPermission = ContextCompat.checkSelfPermission(this, permission);
         return (checkPermission == PackageManager.PERMISSION_GRANTED);
     }
+    //xác nhận người dùng đăng kí quyền
    private void RequestPermission()
     {
         if(checkPermission(Manifest.permission.SEND_SMS)||checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)||checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -201,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     REQUEST_CODE);
         }
     }
+    //kiểm tra kết nối internet
     public boolean isOnline() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.INTERNET}, 1);
@@ -212,7 +217,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         return false;
     }
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -229,13 +233,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onDestroy();
         fusedLocationProviderClient.removeLocationUpdates(locationCallback);
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
       getMenuInflater().inflate(R.menu.my_menu,menu);
       return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     int id=item.getItemId();
@@ -246,10 +248,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             i.putExtra("sdt",dulieusdtnow);
             startActivityForResult(i,REQUEST_CODE_EXAMPLE);
             break;
+            case R.id.lienhe:
+                Intent i2=new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.facebook.com/toitoilazy"));
+                startActivity(i2);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
+    //kiểm tra dữ liệu trả về từ 1 Activity khác
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -270,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void writeInternal() {
         if(dulieusdt!=null) {
             try {
-                OutputStream os = openFileOutput("chuthich_in.txt", MODE_PRIVATE);
+                OutputStream os = openFileOutput("sdt_x.txt", MODE_PRIVATE);
                 String string = dulieusdt;
                 os.write(string.getBytes());
                 os.close();
@@ -281,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
     private void readFromInternal(){
         try {
-            InputStream is = openFileInput("chuthich_in.txt");
+            InputStream is = openFileInput("sdt_x.txt");
             int size = is.available();
             byte data[] = new byte[size];
             is.read(data);
@@ -292,17 +298,24 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             ex.printStackTrace();
         }
     }
+    //kiểm tra toggle button
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             checksensor = true;
             t1.setText("Không phát hiện");
         } else {
+            d=0;
             checksensor = false;
             t1.setText("Đã tắt cảm biến");
+            if(checkMP3==true){
+                mediaPlayer.pause();
+                checkMP3=false;
+            }
+
         }
     }
-
+//sau khi ấn vào GPS
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -314,8 +327,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                                     + "," + location.getLongitude() + "/"));
                             startActivity(intent);
                         }
-
-
                 });
                 break;
         }

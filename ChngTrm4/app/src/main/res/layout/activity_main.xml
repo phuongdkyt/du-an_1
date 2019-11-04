@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
         <ToggleButton
             android:id="@+id/battat"
@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:text="Đã tắt cảm biến"
             android:layout_gravity="left"
-            android:textColor="@android:color/holo_orange_dark"
+            android:textColor="#1DE1E9"
             android:textSize="32dp" />
 
 
@@ -39,24 +39,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="94dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Vị trí hiện tại:"
             android:textColor="#fffc03" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/vitri"/>
+
         <TextView
             android:id="@+id/vitri"
-            android:layout_width="148dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="chưa xác định"
-            android:textColor="#E9110B" />
+            android:textColor="#E93D43" />
 
 
     </LinearLayout>
@@ -69,12 +70,11 @@
         android:textColor="@android:color/holo_orange_dark" />
 
     <TextView
-        android:layout_marginTop="10dp"
         android:id="@+id/ketnoimang"
-        android:textColor="#fffc03"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginTop="10dp"
+        android:textColor="#81E901" />
 
 
         <TextView
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No NumberPhone"
-            android:textColor="#fffc03" />
+            android:textColor="#C400E9" />
 
 
 
