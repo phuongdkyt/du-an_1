@@ -26,7 +26,7 @@ Boolean check=false;
         t1=findViewById(R.id.thongtinsdt);
         btn1=findViewById(R.id.xacnhan1);
         btn2=findViewById(R.id.thoat1);
-      Intent i=getIntent();
+      Intent i=getIntent();//nhận dữ liệu sdt từ MainActivity
      String s= i.getStringExtra("sdt");
       t1.setText("SĐT hiện tại:"+s);
         btn1.setOnClickListener(this);
@@ -43,7 +43,7 @@ Boolean check=false;
                     check=true;
                     sdt = edt1.getText().toString();
                     t1.setText(sdt + "\n" + "Nhấn lưu vào thoát để lưu SĐT");
-                    Toast.makeText(Themsdt_Activity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
+
                 }else Toast.makeText(Themsdt_Activity.this, "Bạn chưa nhập SĐT", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.thoat1:
@@ -52,6 +52,7 @@ Boolean check=false;
                     data.putExtra("key1", sdt);
                     setResult(Activity.RESULT_OK, data);
                     finish();
+                    Toast.makeText(Themsdt_Activity.this, "Lưu thành công", Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else Toast.makeText(Themsdt_Activity.this, "Bạn chưa nhấn xác nhận,vui lòng nhấn xác nhận để thoát", Toast.LENGTH_SHORT).show();

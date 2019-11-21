@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:hint="Nhấp số điện thoại cần lưu"
-    android:phoneNumber="true"
+    android:inputType="phone"
     android:textColor="@android:color/holo_orange_dark"
     android:textColorHint="@android:color/holo_orange_dark"/>
     <LinearLayout

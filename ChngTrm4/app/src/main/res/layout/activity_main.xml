@@ -30,7 +30,7 @@
             android:layout_marginLeft="15dp"
             android:text="Đã tắt cảm biến"
             android:layout_gravity="left"
-            android:textColor="#1DE1E9"
+            android:textColor="#D2D1E9"
             android:textSize="32dp" />
 
 
