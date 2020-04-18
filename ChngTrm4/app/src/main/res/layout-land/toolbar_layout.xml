@@ -3,7 +3,7 @@
 android:layout_width="match_parent"
 android:layout_height="@android:dimen/app_icon_size"
 android:id="@+id/toolbar1"
-  android:background="#4fbb63"
+  android:background="#00FF7F"
 
  
 

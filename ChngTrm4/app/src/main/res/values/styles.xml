@@ -4,10 +4,10 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#E99C20</item>
+        <item name="colorPrimaryDark">#00FF7F</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:navigationBarColor">#14588c</item>
-        <item name="android:textColorPrimary">@android:color/holo_green_light</item>
+        <item name="android:navigationBarColor">#00FF7F</item>
+        <item name="android:textColorPrimary">#000</item>
         <item name="actionMenuTextColor">@android:color/holo_green_light</item>
     </style>
 

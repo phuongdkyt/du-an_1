@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-       android:background="#1d1c1c"
+       android:background="@drawable/tech"
     >
     <include android:id="@+id/toolbar1"
         layout="@layout/toolbar_layout" />
 
     <TextView
-        android:textColor="@android:color/holo_orange_dark"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đã tắt cảm biến"
-        android:textSize="32dp"
+        android:text="Sensor off"
+        android:textSize="35dp"
         android:id="@+id/hienthi"/>
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:src="@drawable/vitri"/>
         <TextView
             android:id="@+id/vitri"
-            android:layout_width="148dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="chưa xác định"
             android:textColor="#fffc03" />

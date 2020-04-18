@@ -28,6 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -39,11 +44,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.Date;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     private SensorManager sensorManager;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);//đăng kí sử dụng Sensor Tiệm cận
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Toast.makeText(this, "Cảm biến khôn9 g tồn tại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Cảm biến không tồn tại!", Toast.LENGTH_SHORT).show();
         }
         //lấy dữ liệu ngày giờ từ hệ thống
         mLastUpdateDay = DateFormat.getDateTimeInstance().format(new Date());
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 for (Location location : locationResult.getLocations()) {
-                    t2.setText("(" + location.getLatitude() + "," + location.getLongitude() + ")");
+                    t2.setText("(" + location.getLatitude() + "," + location.getLongitude() + ")"+"\nclick để xem chi tiết!");
                 }
             }
         };
@@ -132,10 +132,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {//cập nhật sự thay đổi tín hiệu sensor
         Float giatri = event.values[0];// lấy giá trị cảm biến tiệm cận
+
         if (checksensor == true) {//kiếm tra bật chức năng sensor
-            if (giatri == 0) {
+            if (giatri ==0) {
                 d++;
-                t1.setText("Bị phát hiện");
+                t1.setText("Phát hiện tiếp xúc");
                 if (d <= 10) {
                     if (d == 1) {
                         Canhbaomp3();
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     //phát nhạc mp3
     private void Canhbaomp3() {
-        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.canhbaomp3);//lấy file nhạc từ res::raw
+        mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.nc_lactroi);//lấy file nhạc từ res::raw
         mediaPlayer.setLooping(true); //lặp lại nhạc
         mediaPlayer.start();//bắt đầu phát nhạc
     }
@@ -172,10 +173,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         try {
             String dl = String.valueOf(dulieu);
             SmsManager smsManager = SmsManager.getDefault();//API SMS
+           // Log.d("tesst1: ",dl);
             smsManager.sendTextMessage(dulieusdtnow, null, dl, null, null);
             Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "Không gửi được tin nhắn", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Không gửi được tin nhắn.", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
@@ -262,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivityForResult(i, REQUEST_CODE_EXAMPLE);
                 break;
             case R.id.lienhe:
-                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/toitoilazy"));
+                Intent i2 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/profile.php?id=100007573504217"));
                 startActivity(i2);
                 break;
         }
@@ -322,13 +324,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             checksensor = true;
-            t1.setTextColor(Color.parseColor("#1DE1E9"));
-            t1.setText("Không phát hiện");
+            t1.setTextColor(Color.parseColor("#3BCDDF"));
+            if(d==0) t1.setText("Không phát hiện");
         } else {
             d = 0;
             checksensor = false;
-            t1.setText("Đã tắt cảm biến");
-            t1.setTextColor(Color.parseColor("#D2D1E9"));
+            t1.setText("Sensor off");
+            t1.setTextColor(Color.parseColor("#00FF7F"));
             if (checkMP3 == true) {
                 mediaPlayer.stop();
                 checkMP3 = false;

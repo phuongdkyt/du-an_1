@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-       android:background="#08243a"
+       android:background="@drawable/tech"
     >
     <include android:id="@+id/toolbar1"
         layout="@layout/toolbar_layout" />
@@ -28,10 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="15dp"
-            android:text="Đã tắt cảm biến"
+            android:text="Sensor off"
             android:layout_gravity="left"
-            android:textColor="#D2D1E9"
-            android:textSize="32dp" />
+            android:textColor="#00FF7F"
+            android:textStyle="bold"
+            android:textSize="30dp" />
 
 
     </LinearLayout>
@@ -43,21 +44,24 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="94dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:text="Vị trí hiện tại:"
-            android:textColor="#fffc03" />
+            android:textSize="20dp"
+            android:textColor="#00FF7F" />
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
+
             android:src="@drawable/vitri"/>
 
         <TextView
             android:id="@+id/vitri"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="chưa xác định"
-            android:textColor="#E93D43" />
+            android:textSize="20dp"
+            android:textColor="#00FF7F" />
 
 
     </LinearLayout>
@@ -65,16 +69,18 @@
     <TextView
         android:layout_marginTop="10dp"
         android:id="@+id/time1"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:textColor="@android:color/holo_orange_dark" />
+        android:layout_height="wrap_content"
+        android:textColor="#00FF7F" />
 
     <TextView
         android:id="@+id/ketnoimang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:layout_marginTop="10dp"
-        android:textColor="#81E901" />
+        android:textColor="#00FF7F" />
 
 
         <TextView
@@ -83,7 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No NumberPhone"
-            android:textColor="#C400E9" />
+            android:textSize="20dp"
+            android:textColor="#00FF7F"  />
 
 
 
